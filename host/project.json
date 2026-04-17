@@ -1,0 +1,59 @@
+{
+  "name": "host",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "app",
+  "sourceRoot": "host/src",
+  "tags": [],
+  "targets": {
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "buildTarget": "host:build"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@nx/vitest:test",
+      "outputs": ["{options.reportsDirectory}"],
+      "options": {
+        "reportsDirectory": "coverage/host"
+      }
+    },
+    "serve-static": {
+      "continuous": true,
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "host:build",
+        "port": 4200,
+        "spa": true
+      }
+    },
+
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "options": {
+        "outputPath": "dist/host",
+        "index": "host/src/index.html",
+        "main": "host/src/main.ts",
+        "tsConfig": "host/tsconfig.app.json",
+        "assets": [
+          "host/src/favicon.ico",
+          "host/src/assets"
+        ],
+        "styles": [
+          "host/src/styles.scss"
+        ]
+      }
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "options": {
+        "buildTarget": "host:build",
+        "port": 4200
+      }
+    }
+  }
+}

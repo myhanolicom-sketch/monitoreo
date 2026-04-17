@@ -1,0 +1,441 @@
+
+
+:host {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
+  padding: 1.25rem;
+  background: #fff;
+}
+
+.dashboard {
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+  
+}
+
+/* CARD */
+.card {
+  
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  background: #fff;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+/* FORMULARIOS */
+.filters-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+.filters-centered-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 4rem;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.filters-fechas-estado-group {
+  display: flex;
+  align-items: flex-start;
+  gap: 15rem;
+  flex-wrap: wrap;
+}
+
+.filters-estado-archivos-group {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.filter-row-fechas-inline {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 3rem;
+  align-items: flex-start;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.filter-group.actions-group {
+  flex-direction: row;
+  align-items: flex-end;
+  gap: rem;
+  flex: 0 0 auto;
+  min-width: fit-content;
+}
+
+.fecha-inline-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 0 0 auto;
+
+  label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #475569;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* Estilos para PrimeNG 21 DatePicker */
+  ::ng-deep .p-datepicker {
+    display: flex;
+
+    .p-inputtext {
+      width: 140px !important;
+      height: 38px;
+      font-size: 0.875rem;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px 0 0 6px;
+      color: #334155;
+
+      &:focus {
+        border-color: #0ea5e9;
+        box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+        outline: none;
+      }
+    }
+
+    .p-datepicker-trigger {
+      width: 38px;
+      height: 38px;
+      border-radius: 0 6px 6px 0;
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      border-left: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background: #e2e8f0;
+      }
+
+      i {
+        font-size: 0.875rem;
+        color: #64748b;
+      }
+    }
+  }
+}
+
+.checkbox-group-horizontal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+}
+
+.checkbox-group-vertical {
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: #f8fafc;
+  }
+
+  label {
+    font-size: 0.875rem;
+    color: #475569;
+    cursor: pointer;
+    margin: 0;
+    white-space: nowrap;
+  }
+}
+
+.section-title {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding-bottom: 0.25rem;
+}
+
+/* BOTONES */
+.filter-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  border-top: 1px solid #e5e7eb;
+  padding-top: 1rem;
+  margin-top: 0.5rem;
+}
+
+.filter-actions button {
+  min-width: 140px;
+  padding: 0.85rem 1rem;
+  font-weight: 700;
+}
+
+.filter-actions .p-button-primary {
+  background: #4f46e5;
+  border-color: #4338ca;
+  color: #ffffff;
+  box-shadow: 0 10px 20px rgba(79, 70, 229, 0.18);
+}
+
+.filter-actions .p-button-secondary {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  color: #334155;
+}
+
+@media (max-width: 640px) {
+  .filter-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .filter-actions button {
+    width: 100%;
+  }
+}
+
+
+.card-header {
+  justify-content: space-between;
+  align-items: right;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px #f1f5f9;
+}
+
+/* TABLA (Look PrimeNG Moderno) */
+::ng-deep .p-datatable {
+  width: 100%;
+  margin-top: 1.5rem;
+  border-radius: 10px;
+  
+  .p-datatable-header {
+    background: transparent;
+    border: none;
+    padding: 0 0 1rem 0;
+  }
+
+  .p-datatable-thead > tr > th {
+    background-color: #f8fafc;
+    color: #475569;
+    font-weight: 700;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 1rem;
+    border-bottom: 2px solid #e2e8f0;
+  }
+
+  .p-datatable-tbody > tr > td {
+    padding: 1rem;
+    font-size: 0.85rem;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  .p-datatable-tbody > tr:hover {
+    background-color: #f8fafc !important;
+  }
+
+  .table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .acciones-cell {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Estilos personalizados para botones de acción */
+  .btn-accion {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    border: 1px #e2e8f0;
+    background: #f8fafc;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0;
+    font-size: 0;
+
+    i {
+      font-size: 1.1rem;
+      display: inline-block;
+      line-height: 1;
+    }
+
+    &:hover {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+      transform: scale(1.1);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+  }
+
+  .btn-detalle {
+    color: #0ea5e9;
+
+    i {
+      color: #0ea5e9;
+    }
+
+    &:hover {
+      background: #e0f2fe;
+      border-color: #0ea5e9;
+    }
+  }
+
+  .btn-reenviar {
+    color: #f59e0b;
+
+    i {
+      color: #f59e0b;
+    }
+
+    &:hover {
+      background: #fffbeb;
+      border-color: #f59e0b;
+    }
+  }
+
+  .btn-regenerar {
+    color: #10b981;
+
+    i {
+      color: #10b981;
+    }
+
+    &:hover {
+      background: #ecfdf5;
+      border-color: #10b981;
+    }
+  }
+}
+
+/* TAGS */
+::ng-deep .p-tag {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  background: transparent !important;
+  border: none !important;
+  color: inherit !important;
+}
+
+/* Estilos explícitos para botones de acción con iconos */
+::ng-deep .acciones-cell .p-button.p-button-text {
+  padding: 0.5rem !important;
+  
+  i {
+    font-size: 1.2rem !important;
+    color: #475569 !important;
+    display: inline-block !important;
+    line-height: 1 !important;
+  }
+}
+
+::ng-deep .acciones-cell .p-button span.p-button-icon {
+  display: inline-block !important;
+  width: auto !important;
+  height: auto !important;
+  color: #475569 !important;
+}
+
+::ng-deep .acciones-cell .p-button.p-button-text:hover {
+  background: #f1f5f9 !important;
+}
+
+/* ESTADO CELL CON SEMÁFORO */
+.estado-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.traffic-light {
+  display: inline-flex;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.traffic-generadoOk {
+  background-color: #10b981;
+  box-shadow: 0 0 4px rgba(16, 185, 129, 0.5);
+}
+
+.traffic-enviado {
+  background-color: #0ea5e9;
+  box-shadow: 0 0 4px rgba(14, 165, 233, 0.5);
+}
+
+.traffic-errorEnviar {
+  background-color: #ef4444;
+  box-shadow: 0 0 4px rgba(239, 68, 68, 0.5);
+}
+
+.traffic-errorGenerar {
+  background-color: #ef4444;
+  box-shadow: 0 0 4px rgba(239, 68, 68, 0.5);
+}
+
+/* 2. REDUCIR EL PANEL DESPLEGABLE (EL CALENDARIO EN SÍ) */
+::ng-deep .p-datepicker-panel {
+  transform: scale(0.8); // Reduce el tamaño total al 80%
+  transform-origin: top left; // Mantiene la alineación al escalar
+  
+  .p-datepicker-header {
+    padding: 0.25rem; // Menos espacio en las flechas y mes
+    font-size: 0.75rem;
+  }
+
+  table {
+    font-size: 0.7rem; // Números de los días más pequeños
+    
+    th, td {
+      padding: 0.1rem; // Compacta los días
+    }
+
+    .p-datepicker-day {
+      width: 24px; // Círculos de selección más pequeños
+      height: 24px;
+    }
+  }
+}

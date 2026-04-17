@@ -1,0 +1,67 @@
+{
+  "name": "mfMonitoreo",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "app",
+  "sourceRoot": "MF-Monitoreo/src",
+  "tags": [],
+  "targets": {
+    "build": {
+    "executor": "@angular-devkit/build-angular:browser",
+    "options": {
+      "outputPath": "dist/MF-Monitoreo",
+      "index": "MF-Monitoreo/src/index.html",
+      "main": "MF-Monitoreo/src/main.ts",
+      "polyfills": ["zone.js"],
+      "tsConfig": "MF-Monitoreo/tsconfig.app.json",
+      "assets": [
+        "MF-Monitoreo/src/favicon.ico",
+        "MF-Monitoreo/src/assets"
+      ],
+      "styles": [
+        "MF-Monitoreo/src/styles.scss"
+      ]
+    }
+  },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "buildTarget": "mfMonitoreo:build"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@nx/vitest:test",
+      "outputs": ["{options.reportsDirectory}"],
+      "options": {
+        "reportsDirectory": "coverage/MF-Monitoreo"
+      }
+    },
+    "serve-static": {
+      "continuous": true,
+      "executor": "@nx/web:file-server",
+      "defaultConfiguration": "production",
+      "options": {
+        "buildTarget": "mfMonitoreo:build",
+        "port": 4204,
+        "watch": false
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "mfMonitoreo:build:development"
+        },
+        "production": {
+          "buildTarget": "mfMonitoreo:build:production"
+        }
+      }
+    },
+    "serve": {
+      "options": {
+        "port": 4204
+      },
+      "dependsOn": ["host:serve"]
+    }
+  }
+}
