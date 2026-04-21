@@ -5,17 +5,17 @@
   height: 100%;
   padding: 1.5rem;
   background: #f8fafc;
-  overflow: hidden;
+  
 }
 
 .dashboard {
-  max-width: 1400px;
+  max-width: 900px;
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 2rem;
   height: 100%;
-  overflow-y: auto;
+  overflow-y: visible;
   scrollbar-gutter: stable;
 }
 
@@ -23,7 +23,7 @@
   border-radius: 12px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0, 0, 0, 0.05);
   background: #ffffff;
-  padding: 2rem;
+  padding: 1.5rem;
   border: 1px solid #e2e8f0;
   display: flex;
   flex-direction: column;
@@ -252,6 +252,221 @@ p-table {
     border-top: 2px solid #e2e8f0;
     background: #f8fafc;
     padding: 1rem 1.25rem;
+  }
+}
+
+/* UPLOAD SECTION STYLES */
+.card-upload {
+   flex-shrink: 0;
+  min-height: 500px; /* ajusta a tu gusto */
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.upload-header {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #f1f5f9;
+}
+
+.upload-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0;
+}
+
+.upload-container {
+  width: 100%;
+}
+
+.upload-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.upload-section-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #1e293b;
+  text-align: center;
+}
+
+.upload-instructions {
+  font-size: 0.95rem;
+  color: #64748b;
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+}
+
+.catalog-selector-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.selector-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+::ng-deep .catalog-select {
+  width: 100%;
+  max-width: 300px;
+  height: 40px;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+
+  &:focus {
+    outline: none;
+    border-color: #0ea5e9;
+    box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+  }
+
+  &:hover:not(:disabled) {
+    border-color: #94a3b8;
+  }
+
+  option {
+    padding: 0.5rem;
+    color: #334155;
+  }
+}
+
+.drop-zone {
+  border: 2px dashed #cbd5e1;
+  border-radius: 8px;
+  padding: 1.5rem 1rem;  /* antes 3rem */
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: #f8fafc;
+  min-height: 120px;     /* antes 180px */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    border-color: #0ea5e9;
+    background: #f0f9ff;
+  }
+
+  &.active {
+    border-color: #0ea5e9;
+    background: #eff6ff;
+    box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+  }
+}
+
+.drop-zone-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.drop-zone-icon {
+  font-size: 3rem;
+  color: #0ea5e9;
+  line-height: 1;
+}
+
+.drop-zone-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.drop-zone-main {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.drop-zone-sub {
+  font-size: 0.875rem;
+  color: #64748b;
+}
+
+.drop-zone-formats {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  margin-top: 0.5rem;
+}
+
+.selected-file {
+  padding: 1rem;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 6px;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.file-label {
+  font-weight: 600;
+  color: #15803d;
+  font-size: 0.875rem;
+}
+
+.file-name {
+  color: #166534;
+  font-family: 'Courier New', monospace;
+  font-size: 0.875rem;
+}
+
+.upload-actions {
+  display: flex;
+  gap: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.upload-btn,
+.cancel-btn {
+ min-width: 110px;   /* antes 140px */
+  padding: 0.5rem 0.75rem;
+  font-size: 0.85rem;
+}
+
+.upload-btn {
+  background: #4f46e5 !important;
+  border-color: #4338ca !important;
+  color: #ffffff !important;
+  box-shadow: 0 10px 20px rgba(79, 70, 229, 0.18);
+
+  &:hover:not(:disabled) {
+    background: #4338ca !important;
+  }
+
+  &:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+  }
+}
+
+.cancel-btn {
+  background: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+  color: #334155 !important;
+
+  &:hover {
+    background: #e2e8f0 !important;
   }
 }
 

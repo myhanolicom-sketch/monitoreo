@@ -1,6 +1,6 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, FormArray, FormsModule } from '@angular/forms';
 import * as XLSX from 'xlsx';
 import Swal from 'sweetalert2';
 
@@ -20,12 +20,19 @@ import { ReportService } from './remote-entry/services/report.service';
 
 type TagSeverity = "success" | "info" | "warn" | "danger" | "secondary" | "contrast" | undefined;
 
+// Interfaz para Catálogos
+interface Catalog {
+  id: string;
+  name: string;
+}
+
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    FormsModule,
     CardModule,
     CheckboxModule,
     ButtonModule,
@@ -39,6 +46,7 @@ type TagSeverity = "success" | "info" | "warn" | "danger" | "secondary" | "contr
 })
 export class AdminDashboard implements OnInit {
 
+  @ViewChild('fileInput') fileInput!: ElementRef;
 
   filterForm!: FormGroup;
 
@@ -52,6 +60,20 @@ export class AdminDashboard implements OnInit {
   reportData = signal<ReportData[]>([]);
   filteredData = signal<ReportData[]>([]);
   isLoading = signal<boolean>(false);
+
+  // Upload signals
+  selectedFile = signal<File | null>(null);
+  isDragOver = signal<boolean>(false);
+  selectedCatalog = signal<string | null>(null);
+
+  // Datos dummy de catálogos
+  catalogosList: Catalog[] = [
+    { id: 'claves_moneda', name: 'Claves de Moneda' },
+    { id: 'paises', name: 'Países' },
+    { id: 'estatus', name: 'Estatus' },
+    { id: 'tipos_usuario', name: 'Tipos de Usuario' },
+    { id: 'departamentos', name: 'Departamentos' }
+  ];
 
   constructor(
     private fb: FormBuilder,
@@ -475,6 +497,168 @@ export class AdminDashboard implements OnInit {
         });
       }
     });
+  }
+
+  /**
+   * Manejo de eventos drag and drop
+   */
+  onDragOver(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragOver.set(true);
+  }
+
+  onDragLeave(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragOver.set(false);
+  }
+
+  onDrop(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragOver.set(false);
+
+    const files = event.dataTransfer?.files;
+    if (files && files.length > 0) {
+      this._processFile(files[0]);
+    }
+  }
+
+  onFileSelected(event: any): void {
+    const files = event.target.files;
+    if (files && files.length > 0) {
+      this._processFile(files[0]);
+    }
+  }
+
+  /**
+   * Procesa el archivo seleccionado
+   */
+  private _processFile(file: File): void {
+    // Validar extensión
+    const validExtensions = ['csv', 'xlsx'];
+    const fileExtension = file.name.split('.').pop()?.toLowerCase();
+
+    if (!fileExtension || !validExtensions.includes(fileExtension)) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error en formato',
+        text: 'Solo se permiten archivos CSV o XLSX. Por favor selecciona un archivo válido.',
+        confirmButtonColor: '#ef4444'
+      });
+      return;
+    }
+
+    // Validar tamaño (máximo 10MB)
+    const maxSize = 10 * 1024 * 1024; // 10MB
+    if (file.size > maxSize) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Archivo muy grande',
+        text: 'El archivo no puede exceder 10MB. Por favor selecciona un archivo más pequeño.',
+        confirmButtonColor: '#ef4444'
+      });
+      return;
+    }
+
+    this.selectedFile.set(file);
+  }
+
+  /**
+   * Abre el selector de archivos
+   */
+  openFileSelector(): void {
+    this.fileInput.nativeElement.click();
+  }
+
+  /**
+   * Carga el archivo seleccionado
+   */
+  onUploadFile(): void {
+    if (!this.selectedFile() || !this.selectedCatalog()) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Campos requeridos',
+        text: 'Por favor selecciona un catálogo y un archivo',
+        confirmButtonColor: '#0ea5e9'
+      });
+      return;
+    }
+
+    this.isLoading.set(true);
+
+    // Simular envío de archivo
+    setTimeout(() => {
+      this.isLoading.set(false);
+
+      // Seleccionar catálogo para mostrar en el mensaje
+      const catalog = this.catalogosList.find(c => c.id === this.selectedCatalog());
+      const catalogName = catalog?.name || 'Catálogo';
+
+      // Simular diferentes respuestas (éxito o error)
+      const randomSuccess = Math.random() > 0.2; // 80% de éxito
+
+      if (randomSuccess) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Actualización exitosa',
+          html: `<p>El archivo <strong>${this.selectedFile()?.name}</strong> ha sido procesado correctamente.</p>
+                 <p>Se han actualizado <strong>1,245</strong> registros en el catálogo de <strong>${catalogName}</strong>.</p>
+                 <p style="color: #64748b; font-size: 0.875rem; margin-top: 1rem;">La actualización se completó en <strong>2.5 segundos</strong>.</p>`,
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#10b981'
+        }).then(() => {
+          this._resetUploadForm();
+        });
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error en la actualización',
+          html: `<p>Hubo un problema al procesar el archivo <strong>${this.selectedFile()?.name}</strong>.</p>
+                 <p>Detalles del error: El archivo contiene registros duplicados que no pueden ser importados.</p>
+                 <p style="color: #64748b; font-size: 0.875rem; margin-top: 1rem;">Por favor, revisa el archivo y vuelve a intentarlo.</p>`,
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#ef4444'
+        });
+      }
+    }, 1500);
+  }
+
+  /**
+   * Cancela la carga de archivo
+   */
+  onCancel(): void {
+    Swal.fire({
+      title: '¿Cancelar carga?',
+      text: 'El archivo seleccionado será descartado.',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, cancelar',
+      cancelButtonText: 'No, continuar',
+      confirmButtonColor: '#ef4444'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this._resetUploadForm();
+        Swal.fire({
+          icon: 'info',
+          title: 'Cancelado',
+          text: 'La carga ha sido cancelada',
+          timer: 1500
+        });
+      }
+    });
+  }
+
+  /**
+   * Reinicia el formulario de carga
+   */
+  private _resetUploadForm(): void {
+    this.selectedFile.set(null);
+    this.selectedCatalog.set(null);
+    if (this.fileInput) {
+      this.fileInput.nativeElement.value = '';
+    }
   }
 
 }
